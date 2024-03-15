@@ -2,7 +2,7 @@ x_template ='''
 This is a maze problem that I want you to solve.
 
 ```
-{maze}
+maze={maze}
 ```
 
 Information about the problem:
@@ -21,7 +21,7 @@ The rewards are:
 1. "{goal}": 1
 '''
 
-def genXDatum(maze, agent, goal, wall, empty, actions):
+def genXDatum(maze, agent, goal, wall, empty, actions, reward):
   return x_template.format(
     maze=maze,
     agent=agent,
@@ -29,24 +29,10 @@ def genXDatum(maze, agent, goal, wall, empty, actions):
     wall=wall,
     empty=empty,
     actions=actions,
+    reward=reward,
   )
 
-maze = [
-    ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
-    ['#', 'A', '.', '#', '.', '.', '#', '.', '.', '#'],
-    ['#', '#', '.', '#', '.', '#', '#', '#', '.', '#'],
-    ['#', '.', '.', '.', '.', '.', '.', '#', '.', '#'],
-    ['#', '.', '.', '.', '#', '#', '.', '#', '.', '#'],
-    ['#', '.', '.', '.', '#', '.', '.', '#', '.', '#'],
-    ['#', '#', '#', '.', '.', '#', '#', '#', '.', '#'],
-    ['#', '.', '#', '.', '.', '.', '.', '#', '.', '#'],
-    ['#', '.', '#', '.', '#', '#', '.', '#', '.', '#'],
-    ['#', '.', '#', '.', '#', '.', '.', '.', '.', '#'],
-    ['#', '.', '#', '.', '#', '#', '#', '#', '#', '#'],
-    ['#', '.', '.', '.', '.', '.', '.', '.', 'G', '#'],
-    ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
-]
-
-text_file = open("output.txt", "w")
-text_file.write(genXDatum(maze, 'A', '$', '%', '.', [(0,1),(1,0),(0,-1),(-1,0)]))
-text_file.close()
+def writeXDatum(name, maze, agent, goal, wall, empty, actions, reward):
+  text_file = open("x_data/"+name+".txt", "w")
+  text_file.write(genXDatum(maze, agent, goal, wall, empty, actions, reward))
+  text_file.close()
